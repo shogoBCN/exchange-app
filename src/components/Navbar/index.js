@@ -16,7 +16,7 @@ const Navbar = ({ toggle }) => {
               <NavLinks to="/">Currex</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/">Currlist</NavLinks>
+              <NavLinks to="/currlist">Currlist</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinkExt href="https://thor-portfolio.netlify.app/" target="_blank">Portfolio</NavLinkExt>

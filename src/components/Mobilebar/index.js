@@ -10,7 +10,7 @@ const Mobilebar = ( { isOpen, toggle }) => {
       <MobilebarWrapper>
         <MobilebarMenu>
           <MobilebarLink to='/' onClick={toggle}>Currex</MobilebarLink>
-          <MobilebarLink to='/' onClick={toggle}>Currlist</MobilebarLink>
+          <MobilebarLink to='/currlist' onClick={toggle}>Currlist</MobilebarLink>
           <MobilebarLinkExt href="https://thor-portfolio.netlify.app/" target="_blank" onClick={toggle}>Portfolio</MobilebarLinkExt>
         </MobilebarMenu>
       </MobilebarWrapper>
