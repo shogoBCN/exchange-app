@@ -1,16 +1,30 @@
 import React from 'react'
-import { Framer, Amount } from './CurrexElements'
+import DropDown from '../APIcalls'
+
+import { Framer, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExMain, Input, Button } from './CurrexElements'
 
 const CurrEx = () => {
+
   return (
     <>
-      <Framer>
-        <>
+      <Framer>     
+        <CurrExMain>
           <Amount>
             <label>Amount</label>
-            <input type="number" />
+            <Input />
           </Amount>
-        </>
+          <ConvertFrom>
+            <label>From</label>
+              <DropDown />
+          </ConvertFrom>
+          <SwitchButton>
+            <Button />
+          </SwitchButton>
+          <ConvertTo>
+            <label>To</label>
+            <DropDown />
+          </ConvertTo>
+        </CurrExMain>
       </Framer>
     </>
   )
