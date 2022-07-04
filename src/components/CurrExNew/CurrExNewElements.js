@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+
 export const Framer = styled.div`
   padding: 10px;
   border-radius: .25rem!important;
@@ -7,6 +8,14 @@ export const Framer = styled.div`
   background-color: #fff;
   height: 500px;
 ` 
+
+export const Title = styled.div`
+
+`
+
+export const FromTo = styled.div`
+
+`
 
 export const CurrExMain = styled.div`
   margin-top: 30px;
@@ -22,14 +31,14 @@ export const Amount = styled.div`
 `
 
 export const ConvertFrom = styled.div`
-  width: 200px;
+  width: 250px;
   margin: 0 15px 0 15px;
   align-items: center;
   flex-direction: row;
 `
 
 export const ConvertTo = styled.div`
-  width: 200px;
+  width: 250px;
   margin: 0 15px 0 15px;
   align-items: center;
   flex-direction: row;
@@ -57,9 +66,41 @@ export const Input = styled.input`
 `
 
 export const Button = styled.button`
-  
+  height: 38px;
+  &:active {
+    border: 2px solid black;
+  }
 `
 
-export const SwitchButton = styled.div`
+export const BtnIcon = styled.img`
+  height: 38px;
+  &:active {
+    border: 2px solid black;
+  }
+`
 
+export const Select = styled.select`
+  width: 250px;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 0;
+  border-style: solid;
+  border-width: 1px;
+  cursor: default;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 38px;
+  position: relative;
+  transition: all 100ms;
+  box-sizing: border-box;
+
+  &:focus {
+    border: 2px solid black;
+  }
+`
+
+export const SwitchButton = styled.button`
+  border: none;
+  background-color: transparent;
 `
