@@ -1,5 +1,5 @@
 import React from 'react'
-import { Framer, Amount } from './CurrlistElements'
+import { Framer, Amount } from './CurrlistStyles'
 
 const CurrList = () => {
   return (

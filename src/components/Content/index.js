@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import CurrExNew from '../CurrExNew'
+import CurrEx from '../CurrEx'
 import Mobilebar from '../Mobilebar'
 import Navbar from '../Navbar'
 import CurrList from '../Currlist';
@@ -21,7 +21,7 @@ const Home = () => {
       <Mobilebar isOpen={isOpen} toggle={toggle}/>
       <Navbar toggle={toggle}/>
       <Switch>
-        <Route path="/" exact component={CurrExNew} />
+        <Route path="/" exact component={CurrEx} />
         <Route path="/Currlist" exact component={CurrList} />
         <Route component={PageNotFound} />
       </Switch>
