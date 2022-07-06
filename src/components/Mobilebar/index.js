@@ -1,5 +1,5 @@
 import React from 'react';
-import { MobilebarContainer, Icon, CloseIcon, MobilebarWrapper, MobilebarMenu, MobilebarLink, MobilebarLinkExt } from './MobilebarElements';
+import { MobilebarContainer, Icon, CloseIcon, MobilebarWrapper, MobilebarMenu, MobilebarLink, MobilebarLinkExt } from './MobilebarStyles';
 
 const Mobilebar = ( { isOpen, toggle }) => {
   return(

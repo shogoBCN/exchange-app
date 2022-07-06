@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import CurrEx from '../CurrEx'
 import Mobilebar from '../Mobilebar'
 import Navbar from '../Navbar'
-import CurrList from '../Currlist';
+import CurrList from '../CurrList';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const Home = () => {

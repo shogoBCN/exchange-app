@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Select } from './CurrExStyles'
-import { Framer, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExMain, Input, BtnIcon, Title, FromTo, ChartDiv, Result } from './CurrExStyles'
+import { Select } from '../SharedFiles/PagesStyles'
+import { Framer, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExMain, Input, BtnIcon, Title, FromTo, ChartDiv, Result } from '../SharedFiles/PagesStyles'
 import Chart from 'chart.js/auto';
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
