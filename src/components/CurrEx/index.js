@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Select } from '../SharedFiles/PagesStyles'
-import { Framer, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExMain, Input, BtnIcon, Title, FromTo, ChartDiv, Result } from '../SharedFiles/PagesStyles'
+import { CurrExMain, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExDiv, Input, BtnIcon, Title, FromTo, ChartDiv, Result, UpperChart, CurrApp } from '../SharedFiles/PagesStyles'
 import Chart from 'chart.js/auto';
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
@@ -20,7 +20,7 @@ function CurrencySelect(props) {
       onChange={onChangeCurr}
     >   
       {currOptions.map(option => (
-        <option key={option} value={option.replace(/ - .*/g,"$'")}>{option}</option>
+        <option id="options" key={option} value={option.replace(/ - .*/g,"$'")}>{option}</option>
       ))}
     </Select>
   )
@@ -32,21 +32,22 @@ function CurrExNew() {
   const [ toCurr, setToCurr ] = useState()
   const [ amount, setAmount ] = useState(1)
   const [ exchangeRate, setExchangeRate] = useState()
+  const [ exchangeRateReverse, setExchangeRateReverse] = useState()
   const [ graph, chartBuilder] = useState();
   let [ timeframe, setTimeFrame ] = useState(30);
   const ref = useRef()
 
-
-  let fromAmount, resultAmount
+  let fromAmount, resultAmount, resultAmountReverse
   fromAmount = Number(amount)
   if (toCurr === fromCurr) {
     resultAmount = Number(amount)
   }
   else {
   resultAmount = parseFloat((Number(amount) * exchangeRate).toFixed(5))
+  resultAmountReverse = parseFloat((Number(amount) * exchangeRateReverse).toFixed(5))
   }
 
-  // fetch currency names; concat value and label as string
+  // fetch currency names; append value to label as string (to populate select options)
   useEffect(() => {
     fetch(API_URL+"/currencies")
       .then(response => response.json())
@@ -77,20 +78,26 @@ function CurrExNew() {
 
   useEffect(() => {
     if (fromCurr != null && toCurr != null) {
-      fetch(`${API_URL}/latest?from=${fromCurr}`)
+      fetch(`${API_URL}/latest?from=${toCurr}`)
         .then(response => response.json())
-        .then(data => setExchangeRate(data.rates[toCurr])) 
+        .then(data => setExchangeRate(data.rates[fromCurr])) 
     }
   }, [fromCurr, toCurr])
 
   useEffect(() => {
-    console.log(timeframe)
+    if (fromCurr != null && toCurr != null) {
+      fetch(`${API_URL}/latest?from=${fromCurr}`)
+        .then(response => response.json())
+        .then(data => setExchangeRateReverse(data.rates[toCurr])) 
+    }
+  }, [fromCurr, toCurr])
+
+  useEffect(() => {
     const toDate = new Date((new Date()).getTime() - (timeframe * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
     if (fromCurr != null && toCurr != null && fromCurr != toCurr) {
     fetch(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         const chartLabels = Object.keys(data.rates)
         const chartData = Object.values(data.rates).map(rate => rate[toCurr])
         const chartLabel = `${fromCurr}/${toCurr} - ${timeframe} days`
@@ -108,12 +115,26 @@ function CurrExNew() {
                   label: label,
                   data,
                   fill: false,
-                  tension: 0,
+                  borderColor: "#007c89",
+                  backgroundColor: "#000",
                 }
               ]
             },
             options: {
               responsive: true,
+              layout: {
+                padding: {
+                  top: 40,
+                  bottom: 30,
+                  left: 20,
+                  right: 20
+                }
+              },
+              plugins: {
+                legend: {
+                    display: false
+                },
+              }
             }
           })
         }
@@ -136,12 +157,14 @@ function CurrExNew() {
   return (
     <>
       <CurrExMain>   
-        <Framer>
-          <CurrExMain>  
-            <Title>Currency Exchange</Title>
-            <FromTo></FromTo>
-          </CurrExMain>
-          <CurrExMain>
+        <CurrApp>
+          <CurrExDiv>  
+            <div className='title'>
+              <Title>Currency Exchange</Title>
+              <FromTo>{fromCurr} → {toCurr}</FromTo>
+            </div>
+          </CurrExDiv>
+          <CurrExDiv>
             <Amount>
               <label>Amount</label>
               <Input 
@@ -160,9 +183,11 @@ function CurrExNew() {
                 onChangeAmount={handleAmountChange}
               />
             </ConvertFrom>
-            <SwitchButton onClick={switchButton}>
-              <BtnIcon src="./left-right.png"></BtnIcon>
-            </SwitchButton>
+            <div className='butterino'>
+              <SwitchButton onClick={switchButton}>
+                <BtnIcon src="./left-right.png"></BtnIcon>
+              </SwitchButton>
+            </div>
             <ConvertTo>
               <label>To</label>
               <CurrencySelect 
@@ -172,21 +197,27 @@ function CurrExNew() {
                 amount={resultAmount}
               />
             </ConvertTo>
-          </CurrExMain>
-          <CurrExMain>
-            <Result value={amount}>
-              {amount} {fromCurr} = {resultAmount} {toCurr}
+          </CurrExDiv>
+          <CurrExDiv>
+            <Result>
+              <div className='from'>{amount} {fromCurr} =</div>
+              <div className='to'>{resultAmount} {toCurr}</div>
+              <div className='reverse'>( {amount} {toCurr} = {resultAmountReverse} {fromCurr} )</div>
             </Result>
-          </CurrExMain>
-        </Framer>
+          </CurrExDiv>
+        </CurrApp>
       </CurrExMain>
-      <button onClick={() => setTimeFrame(timeframe=7)}>1week</button>
-      <button onClick={() => setTimeFrame(timeframe=30)}>30days</button>
-      <button onClick={() => setTimeFrame(timeframe=90)}>90days</button>
-      <button onClick={() => setTimeFrame(timeframe=365)}>1year</button>
-      <ChartDiv id='chart'>
-        <canvas id='canvas' ref={ref} />
-      </ChartDiv>
+      <UpperChart>
+        <div className='subChart'>
+          <div className='subButtons'>
+            <button className='timeFrameBtn' onClick={() => setTimeFrame(timeframe=7)}>Week</button>
+            <button className='timeFrameBtn' onClick={() => setTimeFrame(timeframe=30)}>Month</button>
+            <button className='timeFrameBtn' onClick={() => setTimeFrame(timeframe=90)}>Quarter</button>
+            <button className='timeFrameBtn' onClick={() => setTimeFrame(timeframe=366)}>Year</button>
+          </div>
+          <ChartDiv id='canvas' ref={ref} />
+        </div>
+      </UpperChart>
     </>
   )
 }

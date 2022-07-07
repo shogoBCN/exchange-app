@@ -83,110 +83,22 @@ function CurrList() {
     }
   }, [fromCurr, toCurr])
 
-  useEffect(() => {
-    console.log(timeframe)
-    const toDate = new Date((new Date()).getTime() - (timeframe * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
-    if (fromCurr != null && toCurr != null && fromCurr != toCurr) {
-    fetch(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        const chartLabels = Object.keys(data.rates)
-        const chartData = Object.values(data.rates).map(rate => rate[toCurr])
-        const chartLabel = `${fromCurr}/${toCurr} - ${timeframe} days`
-        const innerBuilder = function(labels, data, label) {
-          builderCounter = Number(Object.keys(Chart.instances).toString())
-          if ( Chart.instances[builderCounter] ) {
-            Chart.instances[builderCounter].destroy()
-          }       
-          const graph = new Chart(ref.current.getContext('2d'), {
-            type: 'line',
-            data: {
-              labels,
-              datasets: [
-                {
-                  label: label,
-                  data,
-                  fill: false,
-                  tension: 0,
-                }
-              ]
-            },
-            options: {
-              responsive: true,
-            }
-          })
-        }
-        chartBuilder(innerBuilder(chartLabels, chartData, chartLabel))
-      })
-    }
-  }, [fromCurr, toCurr, timeframe])
-
-  function handleAmountChange(e) {
-    setAmount(e.target.value)
-  }
-
-  function switchButton() {
-    let tempFromCurr = fromCurr
-    let tempToCurr = toCurr
-    setFromCurr(tempToCurr)
-    setToCurr(tempFromCurr)
-  }
 
   return (
     <>
-      <CurrExMain>   
-        <Framer>
-          <CurrExMain>  
-            <Title>Currency Exchange</Title>
-            <FromTo></FromTo>
-          </CurrExMain>
-          <CurrExMain>
-            <Amount>
-              <label>Amount</label>
-              <Input 
-                type="number"
-                value={amount}
-                onChange={handleAmountChange}
-              />
-            </Amount>
-            <ConvertFrom>
-              <label>From</label>
-              <CurrencySelect 
-                currOptions={currOptions}
-                selectedCurr={fromCurr}
-                onChangeCurr={e => setFromCurr(e.target.value)}
-                amount={fromAmount}
-                onChangeAmount={handleAmountChange}
-              />
-            </ConvertFrom>
-            <SwitchButton onClick={switchButton}>
-              <BtnIcon src="./left-right.png"></BtnIcon>
-            </SwitchButton>
-            <ConvertTo>
-              <label>To</label>
-              <CurrencySelect 
-                currOptions={currOptions}
-                selectedCurr={toCurr}
-                onChangeCurr={e => setToCurr(e.target.value)}
-                amount={resultAmount}
-              />
-            </ConvertTo>
-          </CurrExMain>
-          <CurrExMain>
-            <Result value={amount}>
-              {amount} {fromCurr} = {resultAmount} {toCurr}
-            </Result>
-          </CurrExMain>
-        </Framer>
+      <CurrExMain>  
+      <Title>Currency Rates</Title>
       </CurrExMain>
-      <button onClick={() => setTimeFrame(timeframe=7)}>1week</button>
-      <button onClick={() => setTimeFrame(timeframe=30)}>30days</button>
-      <button onClick={() => setTimeFrame(timeframe=90)}>90days</button>
-      <button onClick={() => setTimeFrame(timeframe=365)}>1year</button>
-      <ChartDiv id='chart'>
-        <canvas id='canvas' ref={ref} />
-      </ChartDiv>
+      <CurrExMain>   
+        <ConvertTo>
+          <CurrencySelect 
+            currOptions={currOptions}
+            selectedCurr={toCurr}
+            onChangeCurr={e => setToCurr(e.target.value)}
+            amount={resultAmount}
+          />
+        </ConvertTo>
+      </CurrExMain>
     </>
   )
 }

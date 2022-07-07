@@ -5,10 +5,10 @@ import { Link as LinkRouter } from 'react-router-dom';
 export const MobilebarContainer = styled.aside`
   position: fixed;
   width: 100%;
-  height: 40%;
+  height: 50%;
   background: white;
-  border-bottom: 1px solid #eee;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: #BDD0D5;
+  border-bottom: 1px solid #BDD0D5;
   display: grid;
   align-items: center;
   top: 0;
@@ -20,7 +20,7 @@ export const MobilebarContainer = styled.aside`
 `;
 
 export const CloseIcon = styled(FaTimes)`
-  color: black;
+  color: #007c89;
 `;
 
 export const Icon = styled.div`
@@ -40,10 +40,10 @@ export const MobilebarWrapper = styled.div`
 export const MobilebarMenu = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(6, 80px);
+  grid-template-rows: repeat(3, 80px);
   text-align: center;
   @media screen and (max-width: 480px) {
-    grid-template-row: repeat (6, 60px);
+    grid-template-row: repeat (3, 60px);
   }
 ` 
 
@@ -55,12 +55,15 @@ font-size: 1.5rem;
 text-decoration: none;
 list-style: none;
 transition: 0.2 ease-in-out;
-color: black;
+color: #007c89;
+font-weight: bold;
+margin-right: 60px;
 cursor: pointer;
-
 &:hover {
-  color: rgb(51, 153, 255);
-  transition: 0.2s ease-in-out;
+  outline: 1px solid #808080;
+  outline-offset: -10px; 
+  color: #808080;
+  transition: 0.5s ease-in-out;
 }
 `
 
@@ -72,12 +75,15 @@ font-size: 1.5rem;
 text-decoration: none;
 list-style: none;
 transition: 0.2 ease-in-out;
-color: black;
+color: #007c89;
+font-weight: bold;
+margin-right: 60px;
 cursor: pointer;
-
 &:hover {
-  color: rgb(51, 153, 255);
-  transition: all 0.2s ease-in-out;
+  outline: 1px solid #808080;
+  outline-offset: -10px; 
+  color: #808080;
+  transition: 0.5s ease-in-out;
 }
 `
 

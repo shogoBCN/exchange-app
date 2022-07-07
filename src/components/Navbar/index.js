@@ -7,7 +7,7 @@ const Navbar = ({ toggle }) => {
     <>
       <Nav>
         <NavbarContainer>
-          <NavBrand to='/'>Currex<span className="magooblue">™</span></NavBrand>
+          <NavBrand to='/'>Currex™</NavBrand>
           <MobileBurger onClick={toggle}>
             <FaBars />
           </MobileBurger>
@@ -16,7 +16,15 @@ const Navbar = ({ toggle }) => {
               <NavLinks to="/">Currex</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks to="/currlist">Currlist</NavLinks>
+              <NavLinks 
+                to="/currlist"
+                style={({ isActive }) => ({
+                  color: isActive ? '#fff' : '#545e6f',
+                  background: isActive ? '#7600dc' : '#f0f0f0',
+                })}
+                >
+                  Currlist
+              </NavLinks>
             </NavItem>
             <NavItem>
               <NavLinkExt href="https://thor-portfolio.netlify.app/" target="_blank">Portfolio</NavLinkExt>
