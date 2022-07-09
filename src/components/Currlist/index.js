@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 import { Select } from '../SharedFiles/PagesStyles'
-import { Framer, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExMain, Input, BtnIcon, Title, FromTo, ChartDiv, Result } from '../SharedFiles/PagesStyles'
-import Chart from 'chart.js/auto';
+import currenciesObject from '../SharedFiles/currenciesObject'
+import { CurrExMain, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExDiv, Input, BtnIcon, Title, FromTo, ChartDiv, Result, UpperChart, CurrApp } from '../SharedFiles/PagesStyles'
+import Flag from 'react-flagkit'; 
+
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
-let builderCounter = 0
-
 
 function CurrencySelect(props) {
   const {
@@ -26,26 +26,27 @@ function CurrencySelect(props) {
   )
 }
 
+function List(props) {
+  const {
+    listOutput
+  } = props;
+  Object.values(listOutput)
+  return (
+    <div>
+      {Object.values(listOutput).map(entries => {
+        console.log(entries)
+      })}
+    </div>
+  )
+}
+
+
 function CurrList() {
   const [ currOptions, setCurrOptions ] = useState([])
   const [ fromCurr, setFromCurr ] = useState()
-  const [ toCurr, setToCurr ] = useState()
-  const [ amount, setAmount ] = useState(1)
-  const [ exchangeRate, setExchangeRate] = useState()
-  const [ graph, chartBuilder] = useState();
-  let [ timeframe, setTimeFrame ] = useState(30);
-  const ref = useRef()
-
-
-  let fromAmount, resultAmount
-  fromAmount = Number(amount)
-  if (toCurr === fromCurr) {
-    resultAmount = Number(amount)
-  }
-  else {
-  resultAmount = parseFloat((Number(amount) * exchangeRate).toFixed(5))
-  }
-
+  const [ exRates, setExRates ] = useState([])
+  const [ listOutput, setListObject ] = useState({})
+  
   // fetch currency names; concat value and label as string
   useEffect(() => {
     fetch(API_URL+"/currencies")
@@ -55,7 +56,6 @@ function CurrList() {
         if (Object.entries(data).length > 0) {
           Object.entries(data).forEach(item => {
             let selectable = []
-            selectable.value = item[0]
             selectable.label = item.join(" - ")
             option.push(selectable.label)
           })
@@ -68,36 +68,64 @@ function CurrList() {
     fetch(API_URL+"/latest")
       .then(response => response.json())
       .then(data => {
-        const initCurr = Object.keys(data.rates)[29]
-        setFromCurr(data.base)
-        setToCurr(initCurr)
-        setExchangeRate(data.rates[initCurr])
+        let ratios = []
+        setFromCurr(data.base)  
+        if (Object.entries(data).length > 0) { 
+          Object.entries(data.rates).forEach(item => {
+            ratios.push([
+              item[0],
+              item[1]
+            ])
+          })
+        }
+        setExRates(ratios)
+        //console.log(ratios)
       })
   }, [])
 
   useEffect(() => {
-    if (fromCurr != null && toCurr != null) {
-      fetch(`${API_URL}/latest?from=${fromCurr}`)
-        .then(response => response.json())
-        .then(data => setExchangeRate(data.rates[toCurr])) 
-    }
-  }, [fromCurr, toCurr])
-
+    fetch(`${API_URL}/latest?from=${fromCurr}`)
+      .then(response => response.json())
+      .then(data => {
+        if (Object.entries(data).length > 0) {
+        const listObject = Object.keys(data.rates)
+          .filter(currency => currency !== fromCurr)
+          .map(currency => ({
+            currency,
+            rate: data.rates[currency],
+            name: currenciesObject[currency].name,
+            symbol: currenciesObject[currency].symbol,
+            flag: currenciesObject[currency].flag
+          }))   
+        //console.log(listObject)
+        setListObject(listObject)
+        }
+      })
+  }, [fromCurr])
 
   return (
     <>
-      <CurrExMain>  
-      <Title>Currency Rates</Title>
-      </CurrExMain>
       <CurrExMain>   
-        <ConvertTo>
-          <CurrencySelect 
-            currOptions={currOptions}
-            selectedCurr={toCurr}
-            onChangeCurr={e => setToCurr(e.target.value)}
-            amount={resultAmount}
+        <CurrApp>
+          <CurrExDiv>  
+            <div className='title'>
+              <Title>Exchange Rates</Title>
+            </div>
+          </CurrExDiv>
+          <CurrExDiv>
+            <div>
+              <label>Base Currency</label>
+              <CurrencySelect 
+                currOptions={currOptions}
+                selectedCurr={fromCurr}
+                onChangeCurr={e => setFromCurr(e.target.value)}
+              />
+            </div>
+          </CurrExDiv>
+          <List
+            listOutput={listOutput}
           />
-        </ConvertTo>
+        </CurrApp>
       </CurrExMain>
     </>
   )

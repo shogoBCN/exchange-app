@@ -56,7 +56,6 @@ function CurrExNew() {
         if (Object.entries(data).length > 0) {
           Object.entries(data).forEach(item => {
             let selectable = []
-            selectable.value = item[0]
             selectable.label = item.join(" - ")
             option.push(selectable.label)
           })
