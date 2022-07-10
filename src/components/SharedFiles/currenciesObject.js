@@ -2,11 +2,12 @@ const currenciesObject = {
   AUD: {
     name: 'Australian Dollar',
     symbol: '$',
+    flag: 'AU'
   },
   BGN: {
     name: 'Bulgarian Lev',
     symbol: 'лв',
-    flag: 'AU'
+    flag: 'BG'
   },
   BRL: {
     name: 'Brazilian real',

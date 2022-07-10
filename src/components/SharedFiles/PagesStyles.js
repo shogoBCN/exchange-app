@@ -16,6 +16,33 @@ export const CurrApp = styled.div`
   background-color: white;
   border-radius: 8px;
   padding-bottom: 30px;
+  .list-container {
+    margin-top: 30px;
+    width: 85%;
+    @media screen and (max-width: 768px) {
+    width: 100%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    border: solid 5px;
+    border-color: #D6E2E5;
+  }
+` 
+
+export const ListApp = styled.div`
+  width: 90%;
+  min-height: 1000px;
+  background-color: white;
+  border-radius: 8px;
+  padding-bottom: 30px;
+  .list-container {
+    margin-top: 30px;
+    width: 85%;
+    @media screen and (max-width: 768px) {
+    width: 100%;
+    }
+  }
   @media screen and (max-width: 768px) {
     width: 100%;
     border: solid 5px;
@@ -52,6 +79,17 @@ export const CurrExDiv = styled.div`
   .butterino {
     display: flex;
     justify-content: center;
+  }
+  .description-container {
+    margin-top: 30px;
+    margin-bottom: -40px;
+    display: flex;
+    .amount {
+      font-weight: bold;
+    }
+    @media screen and (max-width: 768px) {
+      margin-bottom: -18px;
+  }
   }
 `
 
@@ -213,4 +251,36 @@ export const ChartDiv = styled.canvas`
   max-height: 500px;
 `
 
+export const Table = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+
+  .rate {
+    width: 140px;
+    @media screen and (max-width: 768px) {
+      width: 115px;
+    }
+  }
+
+  .symbol {
+    width: 220px;
+    @media screen and (max-width: 768px) {
+      width: 150px;
+    }
+  }
+
+  th {
+    color: #007c89;
+  }
+
+  td, th {
+  border: 1px solid #E0ECEF;
+  text-align: left;
+  padding: 8px;
+  }
+
+  tr:nth-child(even) {
+  background-color: #D7E5E8;
+  }
+`
 
