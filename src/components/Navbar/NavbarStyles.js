@@ -86,22 +86,3 @@ export const NavLinks = styled(LinkRouter)`
     transition: 0.5s ease-in-out;
   }
 `
-
-export const NavLinkExt = styled.a`
-  color: #007c89;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 0 1rem;
-  height: 100%;
-  border: 1px solid transparent;
-  cursor: pointer;
-  &:hover {
-    outline: 1px solid #808080;
-    outline-offset:-10px; 
-    color: #808080;
-    transition: 0.5s ease-in-out;
-  }
-`
-
