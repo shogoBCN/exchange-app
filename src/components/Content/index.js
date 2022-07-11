@@ -24,7 +24,7 @@ const Home = () => {
       <Switch>
         <Route path="/" exact component={CurrEx} />
         <Route path="/currEx" exact component={CurrEx} />
-        <Route path="/currlist" exact component={CurrList} />
+        <Route path="/currList" exact component={CurrList} />
         <Route component={PageNotFound} />
       </Switch>
       <Footer/>
