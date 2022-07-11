@@ -210,8 +210,8 @@ function CurrExNew() {
           <CurrExDiv>
             <Result>
               <div className='from'>{amount} {fromCurr} =</div>
-              <div className='to'>{resultAmount} {toCurr}</div>
-              <div className='reverse'>( {amount} {toCurr} = {resultAmountReverse} {fromCurr} )</div>
+              <div className='to'>{resultAmountReverse} {toCurr}</div>
+              <div className='reverse'>( {amount} {} = {resultAmount} {fromCurr} )</div>
             </Result>
           </CurrExDiv>
         </CurrApp>
