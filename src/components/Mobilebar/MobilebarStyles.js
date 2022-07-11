@@ -5,7 +5,7 @@ import { Link as LinkRouter } from 'react-router-dom';
 export const MobilebarContainer = styled.aside`
   position: fixed;
   width: 100%;
-  height: 50%;
+  height: 31%;
   background: white;
   background: #BDD0D5;
   border-bottom: 1px solid #BDD0D5;
@@ -34,6 +34,7 @@ export const Icon = styled.div`
 ` ;
 
 export const MobilebarWrapper = styled.div`
+  margin-top: 30px;
   color: #fff;
 `;
 
@@ -66,25 +67,4 @@ cursor: pointer;
   transition: 0.5s ease-in-out;
 }
 `
-
-export const MobilebarLinkExt = styled.a`
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 1.5rem;
-text-decoration: none;
-list-style: none;
-transition: 0.2 ease-in-out;
-color: #007c89;
-font-weight: bold;
-margin-right: 60px;
-cursor: pointer;
-&:hover {
-  outline: 1px solid #808080;
-  outline-offset: -10px; 
-  color: #808080;
-  transition: 0.5s ease-in-out;
-}
-`
-
 

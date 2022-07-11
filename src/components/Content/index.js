@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import CurrEx from '../CurrEx'
 import Mobilebar from '../Mobilebar'
 import Navbar from '../Navbar'
 import CurrList from '../CurrList';
+import CurrEx from '../CurrEx'
+import Footer from '../Footer';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const Home = () => {
@@ -26,8 +27,8 @@ const Home = () => {
         <Route path="/currlist" exact component={CurrList} />
         <Route component={PageNotFound} />
       </Switch>
+      <Footer/>
     </>
-    
   )
 }
 

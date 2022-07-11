@@ -1,5 +1,5 @@
 import React from 'react';
-import { MobilebarContainer, Icon, CloseIcon, MobilebarWrapper, MobilebarMenu, MobilebarLink, MobilebarLinkExt } from './MobilebarStyles';
+import { MobilebarContainer, Icon, CloseIcon, MobilebarWrapper, MobilebarMenu, MobilebarLink } from './MobilebarStyles';
 
 const Mobilebar = ( { isOpen, toggle }) => {
   return(
@@ -11,7 +11,6 @@ const Mobilebar = ( { isOpen, toggle }) => {
         <MobilebarMenu>
           <MobilebarLink to='/' onClick={toggle}>Currex</MobilebarLink>
           <MobilebarLink to='/currlist' onClick={toggle}>Currlist</MobilebarLink>
-          <MobilebarLinkExt href="https://thor-portfolio.netlify.app/" target="_blank" onClick={toggle}>Portfolio</MobilebarLinkExt>
         </MobilebarMenu>
       </MobilebarWrapper>
     </MobilebarContainer>

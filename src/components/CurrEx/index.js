@@ -1,30 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Select } from '../SharedFiles/PagesStyles'
 import { CurrExMain, Amount, ConvertFrom, ConvertTo, SwitchButton, CurrExDiv, Input, BtnIcon, Title, FromTo, ChartDiv, Result, UpperChart, CurrApp } from '../SharedFiles/PagesStyles'
 import Chart from 'chart.js/auto';
+import CurrencySelect from '../SharedFiles/CurrencySelect';
+import checkStatus from '../SharedFiles/fetchUtils.js'
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
 let builderCounter = 0
-
-
-function CurrencySelect(props) {
-  const {
-    currOptions,
-    selectedCurr,
-    onChangeCurr
-  } = props;
-
-  return (
-    <Select 
-      value={selectedCurr}
-      onChange={onChangeCurr}
-    >   
-      {currOptions.map(option => (
-        <option id="options" key={option} value={option.replace(/ - .*/g,"$'")}>{option}</option>
-      ))}
-    </Select>
-  )
-}
 
 function CurrExNew() {
   const [ currOptions, setCurrOptions ] = useState([])
@@ -34,8 +15,6 @@ function CurrExNew() {
   const [ exchangeRate, setExchangeRate] = useState()
   const [ exchangeRateReverse, setExchangeRateReverse] = useState()
   const [ graph, chartBuilder] = useState();
-  const [ urlFromCurr, setUrlFromCurr] = useState();
-  const [ urlToCurr, setUrlToCurr] = useState();
   let [ timeframe, setTimeFrame ] = useState(30);
   const ref = useRef()
 
@@ -52,6 +31,7 @@ function CurrExNew() {
   // fetch currency names; append value to label as string (to populate select options)
   useEffect(() => {
     fetch(API_URL+"/currencies")
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         let option = []
@@ -66,10 +46,11 @@ function CurrExNew() {
       })
   }, [])
 
-
+  // fetch to set initital values 
   useEffect(() => {
     if ( fromCurr === 'undefined' || fromCurr === false ) {
     fetch(API_URL+"/latest")
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         const initCurr = Object.keys(data.rates)[29]
@@ -79,27 +60,32 @@ function CurrExNew() {
       })
   }}, [fromCurr, toCurr])
 
-
+  // fetch to get latest BASE currency
   useEffect(() => {
-    if (fromCurr != null && toCurr != null) {
+    if (fromCurr != false && toCurr != false) {
       fetch(`${API_URL}/latest?from=${toCurr}`)
+        .then(checkStatus)
         .then(response => response.json())
         .then(data => setExchangeRate(data.rates[fromCurr])) 
     }
   }, [fromCurr, toCurr])
 
+  // fetch to get latest TO currency
   useEffect(() => {
-    if (fromCurr != null && toCurr != null) {
+    if (fromCurr != false && toCurr != false) {
       fetch(`${API_URL}/latest?from=${fromCurr}`)
+        .then(checkStatus)
         .then(response => response.json())
         .then(data => setExchangeRateReverse(data.rates[toCurr])) 
     }
   }, [fromCurr, toCurr])
 
+  // create and print chart
   useEffect(() => {
     const toDate = new Date((new Date()).getTime() - (timeframe * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
     if (fromCurr != null && toCurr != null && fromCurr != toCurr) {
     fetch(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         const chartLabels = Object.keys(data.rates)
@@ -147,6 +133,7 @@ function CurrExNew() {
     }
   }, [fromCurr, toCurr, timeframe])
 
+  // get values from URL
   useEffect(() => {
     function getQueryVariable(variable) {
       let query = window.location.search.substring(1);
@@ -168,6 +155,7 @@ function CurrExNew() {
     setAmount(e.target.value)
   }
 
+  // switch BASE with TO
   function switchButton() {
     let tempFromCurr = fromCurr
     let tempToCurr = toCurr

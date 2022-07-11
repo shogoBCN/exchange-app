@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaBars } from 'react-icons/fa';
-import { Nav, NavbarContainer, NavBrand, MobileBurger, NavMenu, NavItem, NavLinks, NavLinkExt } from './NavbarStyles';
+import { Nav, NavbarContainer, NavBrand, MobileBurger, NavMenu, NavItem, NavLinks } from './NavbarStyles';
 
 const Navbar = ({ toggle }) => {
   return (
@@ -20,9 +20,6 @@ const Navbar = ({ toggle }) => {
                 to="/currList">
                   Currlist
               </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinkExt href="https://thor-portfolio.netlify.app/" target="_blank">Portfolio</NavLinkExt>
             </NavItem>
           </NavMenu>
         </NavbarContainer>

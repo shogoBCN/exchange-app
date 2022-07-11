@@ -1,32 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Select } from '../SharedFiles/PagesStyles'
+import React, { useEffect, useState } from 'react'
+import CurrencySelect from '../SharedFiles/CurrencySelect';
 import { Link } from 'react-router-dom'
-import { CurrExMain, Table, ConvertFrom, ConvertTo, SwitchButton, CurrExDiv, Input, BtnIcon, Title, FromTo, ChartDiv, Result, UpperChart, ListApp } from '../SharedFiles/PagesStyles'
+import { CurrExMain, Table, CurrExDiv, Title, ListApp } from '../SharedFiles/PagesStyles'
 import Flag from 'react-flagkit'; 
 import currenciesObject from '../SharedFiles/currenciesObject'
-
-
+import checkStatus from '../SharedFiles/fetchUtils.js'
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
-
-function CurrencySelect(props) {
-  const {
-    currOptions,
-    selectedCurr,
-    onChangeCurr
-  } = props;
-
-  return (
-    <Select 
-      value={selectedCurr}
-      onChange={onChangeCurr}
-    >   
-      {currOptions.map(option => (
-        <option key={option} value={option.replace(/ - .*/g,"$'")}>{option}</option>
-      ))}
-    </Select>
-  )
-}
 
 function List(props) {
   const {
@@ -68,6 +48,7 @@ function CurrList() {
   // fetch currency names; concat value and label as string
   useEffect(() => {
     fetch(API_URL+"/currencies")
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         let option = []
@@ -82,16 +63,20 @@ function CurrList() {
       })
   }, [])
 
+  // initial fetch
   useEffect(() => {
     fetch(API_URL+"/latest")
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         setFromCurr(data.base)  
       })
   }, [])
 
+  // create list object with static + api values
   useEffect(() => {
     fetch(`${API_URL}/latest?from=${fromCurr}`)
+      .then(checkStatus)
       .then(response => response.json())
       .then(data => {
         if (Object.entries(data).length > 0) {

@@ -265,7 +265,7 @@ export const Table = styled.table`
   .symbol {
     width: 220px;
     @media screen and (max-width: 768px) {
-      width: 150px;
+      width: 140px;
     }
   }
 
