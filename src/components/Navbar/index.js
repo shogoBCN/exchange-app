@@ -13,16 +13,11 @@ const Navbar = ({ toggle }) => {
           </MobileBurger>
           <NavMenu>
             <NavItem>
-              <NavLinks to="/">Currex</NavLinks>
+              <NavLinks to="/currEx">Currex</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks 
-                to="/currlist"
-                style={({ isActive }) => ({
-                  color: isActive ? '#fff' : '#545e6f',
-                  background: isActive ? '#7600dc' : '#f0f0f0',
-                })}
-                >
+                to="/currList">
                   Currlist
               </NavLinks>
             </NavItem>

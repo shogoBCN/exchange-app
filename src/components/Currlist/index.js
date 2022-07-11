@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Select } from '../SharedFiles/PagesStyles'
-import currenciesObject from '../SharedFiles/currenciesObject'
+import { Link } from 'react-router-dom'
 import { CurrExMain, Table, ConvertFrom, ConvertTo, SwitchButton, CurrExDiv, Input, BtnIcon, Title, FromTo, ChartDiv, Result, UpperChart, ListApp } from '../SharedFiles/PagesStyles'
 import Flag from 'react-flagkit'; 
+import currenciesObject from '../SharedFiles/currenciesObject'
+
 
 
 const API_URL = 'https://altexchangerateapi.herokuapp.com'
@@ -46,7 +48,7 @@ function List(props) {
               <Flag country={listItem.flag} />&nbsp;{listItem.name}
             </td>
             <td key={listItem.rate}>
-              {listItem.rate}
+              <Link to={`/currEx?fromCurr=${fromCurr}&toCurr=${listItem.currency}`}>{listItem.rate}</Link>
             </td>
             <td key={listItem.flag}>
               {listItem.currency} ({listItem.symbol}) 
@@ -60,8 +62,7 @@ function List(props) {
 
 function CurrList() {
   const [ currOptions, setCurrOptions ] = useState([])
-  const [ fromCurr, setFromCurr ] = useState()
-  const [ exRates, setExRates ] = useState([])
+  const [ fromCurr, setFromCurr ] = useState('EUR')
   const [ listOutput, setListObject ] = useState({})
   
   // fetch currency names; concat value and label as string
@@ -85,7 +86,6 @@ function CurrList() {
     fetch(API_URL+"/latest")
       .then(response => response.json())
       .then(data => {
-        let ratios = []
         setFromCurr(data.base)  
       })
   }, [])
@@ -109,7 +109,6 @@ function CurrList() {
       })
   }, [fromCurr])
 
-  console.log(currenciesObject[fromCurr])
   return (
     <>
       <CurrExMain>   
@@ -131,7 +130,7 @@ function CurrList() {
           </CurrExDiv>
           <CurrExDiv>  
             <div className='description-container'>
-              <Flag country={currenciesObject['EUR'].flag} />&nbsp;
+              <Flag country={currenciesObject[fromCurr].flag} />&nbsp;
               <div><span className='amount'>1 {fromCurr}</span> equals the following:</div>
             </div>
           </CurrExDiv>

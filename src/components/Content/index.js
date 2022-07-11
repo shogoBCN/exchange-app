@@ -22,7 +22,8 @@ const Home = () => {
       <Navbar toggle={toggle}/>
       <Switch>
         <Route path="/" exact component={CurrEx} />
-        <Route path="/Currlist" exact component={CurrList} />
+        <Route path="/currEx" exact component={CurrEx} />
+        <Route path="/currlist" exact component={CurrList} />
         <Route component={PageNotFound} />
       </Switch>
     </>

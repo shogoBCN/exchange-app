@@ -28,12 +28,14 @@ function CurrencySelect(props) {
 
 function CurrExNew() {
   const [ currOptions, setCurrOptions ] = useState([])
-  const [ fromCurr, setFromCurr ] = useState()
-  const [ toCurr, setToCurr ] = useState()
+  const [ fromCurr, setFromCurr ] = useState('EUR')
+  const [ toCurr, setToCurr ] = useState('USD')
   const [ amount, setAmount ] = useState(1)
   const [ exchangeRate, setExchangeRate] = useState()
   const [ exchangeRateReverse, setExchangeRateReverse] = useState()
   const [ graph, chartBuilder] = useState();
+  const [ urlFromCurr, setUrlFromCurr] = useState();
+  const [ urlToCurr, setUrlToCurr] = useState();
   let [ timeframe, setTimeFrame ] = useState(30);
   const ref = useRef()
 
@@ -64,7 +66,9 @@ function CurrExNew() {
       })
   }, [])
 
+
   useEffect(() => {
+    if ( fromCurr === 'undefined' || fromCurr === false ) {
     fetch(API_URL+"/latest")
       .then(response => response.json())
       .then(data => {
@@ -73,7 +77,8 @@ function CurrExNew() {
         setToCurr(initCurr)
         setExchangeRate(data.rates[initCurr])
       })
-  }, [])
+  }}, [fromCurr, toCurr])
+
 
   useEffect(() => {
     if (fromCurr != null && toCurr != null) {
@@ -141,6 +146,23 @@ function CurrExNew() {
       })
     }
   }, [fromCurr, toCurr, timeframe])
+
+  useEffect(() => {
+    function getQueryVariable(variable) {
+      let query = window.location.search.substring(1);
+      let vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        let pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return(false);
+    }
+    setFromCurr(getQueryVariable('fromCurr'))
+    setToCurr(getQueryVariable('toCurr'))
+  }, [])
+
 
   function handleAmountChange(e) {
     setAmount(e.target.value)
