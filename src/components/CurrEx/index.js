@@ -62,7 +62,7 @@ function CurrExNew() {
 
   // fetch to get latest BASE currency
   useEffect(() => {
-    if (fromCurr != false && toCurr != false) {
+    if (fromCurr !== false && toCurr !== false) {
       fetch(`${API_URL}/latest?from=${toCurr}`)
         .then(checkStatus)
         .then(response => response.json())
@@ -72,7 +72,7 @@ function CurrExNew() {
 
   // fetch to get latest TO currency
   useEffect(() => {
-    if (fromCurr != false && toCurr != false) {
+    if (fromCurr !== false && toCurr !== false) {
       fetch(`${API_URL}/latest?from=${fromCurr}`)
         .then(checkStatus)
         .then(response => response.json())
@@ -83,7 +83,7 @@ function CurrExNew() {
   // create and print chart
   useEffect(() => {
     const toDate = new Date((new Date()).getTime() - (timeframe * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
-    if (fromCurr != null && toCurr != null && fromCurr != toCurr) {
+    if (fromCurr !== null && toCurr !== null && fromCurr !== toCurr) {
     fetch(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
       .then(checkStatus)
       .then(response => response.json())
@@ -140,7 +140,7 @@ function CurrExNew() {
       let vars = query.split("&");
       for (var i = 0; i < vars.length; i++) {
         let pair = vars[i].split("=");
-        if (pair[0] == variable) {
+        if (pair[0] === variable) {
           return pair[1];
         }
       }
