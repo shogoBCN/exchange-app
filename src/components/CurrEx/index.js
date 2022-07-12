@@ -22,6 +22,7 @@ function CurrExNew() {
   fromAmount = Number(amount)
   if (toCurr === fromCurr) {
     resultAmount = Number(amount)
+    resultAmountReverse = Number(amount)
   }
   else {
   resultAmount = parseFloat((Number(amount) * exchangeRate).toFixed(5))
@@ -66,7 +67,9 @@ function CurrExNew() {
       fetch(`${API_URL}/latest?from=${toCurr}`)
         .then(checkStatus)
         .then(response => response.json())
-        .then(data => setExchangeRate(data.rates[fromCurr])) 
+        .then(data => {
+          setExchangeRate(data.rates[fromCurr])
+        }) 
     }
   }, [fromCurr, toCurr])
 
@@ -76,7 +79,9 @@ function CurrExNew() {
       fetch(`${API_URL}/latest?from=${fromCurr}`)
         .then(checkStatus)
         .then(response => response.json())
-        .then(data => setExchangeRateReverse(data.rates[toCurr])) 
+        .then(data => {
+          setExchangeRateReverse(data.rates[toCurr])
+        }) 
     }
   }, [fromCurr, toCurr])
 
@@ -84,6 +89,7 @@ function CurrExNew() {
   useEffect(() => {
     const toDate = new Date((new Date()).getTime() - (timeframe * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
     if (fromCurr !== null && toCurr !== null && fromCurr !== toCurr) {
+    console.log(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
     fetch(`${API_URL}/${toDate}..?from=${fromCurr}&to=${toCurr}`)
       .then(checkStatus)
       .then(response => response.json())
@@ -122,7 +128,7 @@ function CurrExNew() {
               },
               plugins: {
                 legend: {
-                    display: false
+                  display: false
                 },
               }
             }
@@ -211,7 +217,7 @@ function CurrExNew() {
             <Result>
               <div className='from'>{amount} {fromCurr} =</div>
               <div className='to'>{resultAmountReverse} {toCurr}</div>
-              <div className='reverse'>( {amount} {} = {resultAmount} {fromCurr} )</div>
+              <div className='reverse'>( {amount} {toCurr} = {resultAmount} {fromCurr} )</div>
             </Result>
           </CurrExDiv>
         </CurrApp>

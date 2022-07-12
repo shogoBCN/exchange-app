@@ -6,13 +6,15 @@ function CurrencySelect(props) {
   const {
     currOptions,
     selectedCurr,
-    onChangeCurr
+    onChangeCurr,
+    loading
   } = props;
 
   return (
     <Select 
       value={selectedCurr}
       onChange={onChangeCurr}
+      disabled={loading}
     >   
       {currOptions.map(option => (
         <option id="options" key={option} value={option.replace(/ - .*/g,"$'")}>{option}</option>
