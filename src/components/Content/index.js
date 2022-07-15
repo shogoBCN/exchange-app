@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Mobilebar from '../Mobilebar'
 import Navbar from '../Navbar'
-import CurrList from '../CurrList';
+import CurrList from '../Currlist';
 import CurrEx from '../CurrEx'
 import Footer from '../Footer';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
