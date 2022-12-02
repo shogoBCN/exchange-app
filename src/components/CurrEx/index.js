@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import CurrencySelect from '../SharedFiles/CurrencySelect';
 import checkStatus from '../SharedFiles/fetchUtils.js'
 
-const API_URL = 'https://altexchangerateapi.herokuapp.com'
+const API_URL = 'https://api.frankfurter.com'
 let builderCounter = 0
 
 function CurrExNew() {
