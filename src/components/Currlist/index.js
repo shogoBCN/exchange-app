@@ -6,7 +6,7 @@ import Flag from 'react-flagkit';
 import currenciesObject from '../SharedFiles/currenciesObject'
 import checkStatus from '../SharedFiles/fetchUtils.js'
 
-const API_URL = 'https://altexchangerateapi.herokuapp.com'
+const API_URL = 'https://www.frankfurter.app'
 
 function List(props) {
   const {

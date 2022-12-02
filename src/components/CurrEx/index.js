@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import CurrencySelect from '../SharedFiles/CurrencySelect';
 import checkStatus from '../SharedFiles/fetchUtils.js'
 
-const API_URL = 'https://altexchangerateapi.herokuapp.com'
+const API_URL = 'https://www.frankfurter.app'
 let builderCounter = 0
 
 function CurrExNew() {
@@ -31,7 +31,7 @@ function CurrExNew() {
 
   // fetch currency names; append value to label as string (to populate select options)
   useEffect(() => {
-    fetch(API_URL+"/currencies")
+    fetch( +"/currencies")
       .then(checkStatus)
       .then(response => response.json())
       .then(data => {
