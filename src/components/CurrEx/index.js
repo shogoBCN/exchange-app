@@ -31,7 +31,7 @@ function CurrExNew() {
 
   // fetch currency names; append value to label as string (to populate select options)
   useEffect(() => {
-    fetch( +"/currencies")
+    fetch(API_URL + "/currencies")
       .then(checkStatus)
       .then(response => response.json())
       .then(data => {

@@ -47,7 +47,7 @@ function CurrList() {
   
   // fetch currency names; concat value and label as string
   useEffect(() => {
-    fetch(API_URL+"/currencies")
+    fetch(API_URL + "/currencies")
       .then(checkStatus)
       .then(response => response.json())
       .then(data => {
